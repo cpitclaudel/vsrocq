@@ -289,17 +289,17 @@ let id_of_pos_opt st = function
 let get_messages st id =
   let error = ExecutionManager.error st.execution_state id in
   let feedback = ExecutionManager.feedback st.execution_state id in
-  let feedback = List.map (fun (lvl,_oloc,_,msg) -> DiagnosticSeverity.of_feedback_level lvl, pp_of_rocqpp msg) feedback  in
+  let feedback = List.map (fun (lvl,_oloc,_,msg) -> lvl, pp_of_rocqpp msg) feedback  in
   match error with
-  | Some (_oloc,msg) -> (DiagnosticSeverity.Error, pp_of_rocqpp msg) :: feedback
+  | Some (_oloc,msg) -> (Feedback.Error, pp_of_rocqpp msg) :: feedback
   | None -> feedback
 
 let get_string_messages st id =
   let error = ExecutionManager.error st.execution_state id in
   let feedback = ExecutionManager.feedback st.execution_state id in
-  let feedback = List.map (fun (lvl,_oloc,_,msg) -> DiagnosticSeverity.of_feedback_level lvl, Pp.string_of_ppcmds msg) feedback  in
+  let feedback = List.map (fun (lvl,_oloc,_,msg) -> lvl, Pp.string_of_ppcmds msg) feedback  in
   match error with
-  | Some (_oloc,msg) -> (DiagnosticSeverity.Error, Pp.string_of_ppcmds msg) :: feedback
+  | Some (_oloc,msg) -> (Feedback.Error, Pp.string_of_ppcmds msg) :: feedback
   | None -> feedback
 
 let get_info_messages st pos =
@@ -313,7 +313,7 @@ let get_info_messages st pos =
     in
     let feedback = ExecutionManager.feedback st.execution_state id in
     let feedback = feedback |> List.filter info in
-    List.map (fun (lvl,_oloc,_,msg) -> DiagnosticSeverity.of_feedback_level lvl, pp_of_rocqpp msg) feedback
+    List.map (fun (lvl,_oloc,_,msg) -> lvl, pp_of_rocqpp msg) feedback
 
 let create_execution_event background event =
   let priority = if background then None else Some PriorityManager.execution in

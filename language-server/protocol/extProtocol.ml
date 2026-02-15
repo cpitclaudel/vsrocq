@@ -107,9 +107,9 @@ module Notification = struct
       type t = {
         range: Range.t;
         proof: ProofState.t option;
-        messages: (DiagnosticSeverity.t * pp) list;
+        messages: (Feedback.level * pp) list;
         pp_proof: PpProofState.t option;
-        pp_messages: (DiagnosticSeverity.t *string) list;
+        pp_messages: (Feedback.level * string) list;
       } [@@deriving yojson]
 
     end

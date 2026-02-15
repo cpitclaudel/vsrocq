@@ -98,10 +98,10 @@ val executed_ranges : state -> Settings.Mode.t -> exec_overview
 val observe_id_range : state -> Range.t option
 (** returns the range of the sentence referenced by observe_id **)
 
-val get_messages : state -> sentence_id -> (DiagnosticSeverity.t * pp) list
+val get_messages : state -> sentence_id -> (Feedback.level * pp) list
 (** returns the messages associated to a given position *)
 
-val get_info_messages : state -> Position.t option -> (DiagnosticSeverity.t * pp) list
+val get_info_messages : state -> Position.t option -> (Feedback.level * pp) list
 (** returns the Feedback.Info level messages associated to a given position *)
 
 val get_document_symbols : state -> DocumentSymbol.t list

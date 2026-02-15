@@ -91,35 +91,24 @@ module DiagnosticSeverity = struct
 
 end
 
-module FeedbackChannel = struct
+module Feedback = struct
+  include Feedback
 
-  type t = 
-  | Debug 
-  | Info
-  | Notice
-  [@@deriving sexp, yojson]
+  type foo = int
 
-  let yojson_of_t = function
-  | Debug -> `Int 0
-  | Info -> `Int 1
-  | Notice -> `Int 2
+  let yojson_of_level = function
+  | Debug -> `Int 5
+  | Info -> `Int 4
+  | Notice -> `Int 3
+  | Warning -> `Int 2
+  | Error -> `Int 1
 
-  let t_of_feedback_level = function 
-  | Feedback.Debug -> Some Debug
-  | Feedback.Info -> Some Info 
-  | Feedback.Notice -> Some Notice 
-  | Feedback.(Error | Warning) -> None
-
-end
-
-module RocqFeedback = struct 
-
-  type t = {
-    range: Range.t; 
-    message: string; 
-    channel: FeedbackChannel.t;
-  } [@@deriving sexp, yojson]
-  
+  let level_of_yojson = function
+  | `Int 5 -> Debug
+  | `Int 4 -> Info
+  | `Int 3 -> Notice
+  | `Int 2 -> Warning
+  | _ -> Error
 end
 
 type query_result =
